@@ -12,11 +12,12 @@ export default function Home() {
           {/* Background Image Wrapper */}
           <div className="absolute inset-0 z-0">
             <Image
-              src="/images/hero_bg.png"
+              src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=2000&auto=format&fit=crop"
               alt="Dubai Hero Skyline"
               fill
               className="object-cover object-center scale-100 animate-[pulse_20s_ease-in-out_infinite] opacity-90"
               priority
+              unoptimized
             />
             {/* Elegant Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/40 to-transparent"></div>
