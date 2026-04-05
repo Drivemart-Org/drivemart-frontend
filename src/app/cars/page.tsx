@@ -92,16 +92,7 @@ function CarsPage() {
   return (
     <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex flex-col md:flex-row gap-8">
       
-      {/* Mobile Filter Toggle */}
-      <div className="md:hidden flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-black text-slate-900">Used Cars</h1>
-        <button 
-          onClick={() => setShowFiltersMobile(!showFiltersMobile)}
-          className="bg-white border border-gray-200 text-slate-800 px-4 py-2 rounded-xl font-bold flex items-center gap-2 shadow-sm"
-        >
-          <Filter size={18} /> Filters
-        </button>
-      </div>
+
 
       {/* LEFT SIDEBAR - FILTERS */}
       <aside className={`w-full md:w-[320px] shrink-0 bg-white border border-gray-200 rounded-2xl shadow-sm p-6 ${showFiltersMobile ? 'block' : 'hidden md:block'} self-start md:sticky md:top-28`}>
@@ -125,7 +116,7 @@ function CarsPage() {
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               placeholder="e.g. AMG, Sunroof" 
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm font-medium"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl text-slate-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm font-medium"
             />
           </div>
         </div>
@@ -145,7 +136,7 @@ function CarsPage() {
                   checked={brand === b}
                   onChange={() => setBrand(brand === b ? "" : b)} 
                 />
-                <span className={`text-sm font-medium ${brand === b ? 'text-slate-900' : 'text-gray-600'}`}>{b}</span>
+                <span className={`text-sm font-medium ${brand === b ? 'text-slate-800' : 'text-gray-600'}`}>{b}</span>
               </label>
             ))}
           </div>
@@ -160,7 +151,7 @@ function CarsPage() {
               placeholder="Min" 
               value={minPrice}
               onChange={(e) => setMinPrice(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm font-medium"
+              className="w-full px-3 py-2.5 rounded-xl border border-gray-300 text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm font-medium"
             />
             <span className="text-gray-400 font-medium">-</span>
             <input 
@@ -168,7 +159,7 @@ function CarsPage() {
               placeholder="Max" 
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm font-medium"
+              className="w-full px-3 py-2.5 rounded-xl border border-gray-300 text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm font-medium"
             />
           </div>
         </div>
@@ -182,23 +173,32 @@ function CarsPage() {
 
       {/* RIGHT CONTENT - GRID LISTINGS */}
       <div className="flex-1 w-full flex flex-col">
-        <div className="hidden md:flex justify-between items-end mb-6">
+        <div className="flex flex-col md:flex-row justify-between md:items-end gap-5 mb-6">
           <div>
-            <h1 className="text-3xl font-black text-slate-900 tracking-tight">
+            <h1 className="text-2xl lg:text-3xl font-black text-slate-900 tracking-tight">
               {brand ? `Used ${brand} Cars in India` : "Used Cars for sale in India"}
             </h1>
             <p className="text-gray-500 font-medium mt-1">Showing {total} results matching your criteria</p>
           </div>
           
-          <div className="relative">
+          <div className="flex items-center gap-3 w-full md:w-auto">
+            {/* Mobile Filter Button */}
+            <button 
+              onClick={() => setShowFiltersMobile(!showFiltersMobile)}
+              className="md:hidden flex-1 justify-center bg-white border border-gray-200 text-slate-800 px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-sm"
+            >
+              <Filter size={18} /> Filters
+            </button>
+          
+          <div className="relative flex-1 md:flex-none">
             <button 
               onClick={() => setIsSortOpen(!isSortOpen)}
-              className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-xl shadow-sm text-sm font-bold text-slate-700 hover:bg-gray-50"
+              className="w-full md:w-auto flex justify-between items-center gap-2 bg-white border border-gray-200 px-4 py-2.5 rounded-xl shadow-sm text-sm font-bold text-slate-700 hover:bg-gray-50"
             >
-              Sort: {sortOptions.find(o => o.value === sort)?.label || "Newest to Oldest"} <ChevronDown size={16} />
+              <span className="truncate">Sort: {sortOptions.find(o => o.value === sort)?.label || "Newest to Oldest"}</span> <ChevronDown size={16} className="shrink-0" />
             </button>
             {isSortOpen && (
-              <div className="absolute right-0 top-full mt-2 w-64 bg-white border border-gray-100 shadow-xl rounded-xl py-2 z-50">
+              <div className="absolute right-0 top-full mt-2 w-full md:w-64 bg-white border border-gray-100 shadow-xl rounded-xl py-2 z-50">
                 {sortOptions.map(option => (
                   <button 
                     key={option.value}
@@ -212,8 +212,9 @@ function CarsPage() {
             )}
           </div>
         </div>
+      </div>
 
-        {loading ? (
+      {loading ? (
           <div className="w-full h-64 flex items-center justify-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-rose-600"></div>
           </div>
