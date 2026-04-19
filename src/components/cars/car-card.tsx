@@ -1,9 +1,23 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Calendar, Gauge, Heart, MapPin } from "lucide-react";
 
-export default function CarCard({ price, title, year, km, loc, image, dealer, premium = false, tag }: any) {
+export default function CarCard({ id, price, title, year, km, loc, image, dealer, premium = false, tag }: any) {
+  const router = useRouter();
+
+  const handleDealerClick = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (dealer && dealer.id) {
+       router.push(`/dealers/${dealer.id}`);
+    }
+  };
+
   return (
-    <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_40px_rgb(0,0,0,0.12)] transition-shadow duration-300 border border-gray-100 overflow-hidden flex flex-col group relative">
+    <Link href={id ? `/cars/${id}` : "/cars"} className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_40px_rgb(0,0,0,0.12)] transition-shadow duration-300 border border-gray-100 overflow-hidden flex flex-col group relative block cursor-pointer">
 
       {/* Immersive Image Header */}
       <div className="relative w-full aspect-[4/3] bg-gray-100 overflow-hidden p-2">
@@ -49,13 +63,16 @@ export default function CarCard({ price, title, year, km, loc, image, dealer, pr
       </div>
 
       {dealer && (
-        <div className="px-5 py-4 bg-slate-50 border-t border-gray-100 flex items-center justify-between mt-auto">
+        <div 
+          onClick={handleDealerClick}
+          className="px-5 py-4 bg-slate-50 border-t border-gray-100 flex items-center justify-between mt-auto hover:bg-slate-100 transition-colors z-10 relative cursor-pointer"
+        >
           <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Sold By</span>
           <div className="text-slate-800 font-black text-[12px] px-2 py-1 rounded shadow-sm tracking-tight border border-gray-200 bg-white">
-            {dealer}
+            {typeof dealer === 'object' ? dealer.dealership_name : dealer}
           </div>
         </div>
       )}
-    </div>
+    </Link>
   );
 }
