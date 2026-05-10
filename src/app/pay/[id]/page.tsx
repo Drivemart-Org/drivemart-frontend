@@ -5,11 +5,28 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { Loader2, ShieldCheck, CheckCircle } from "lucide-react";
 import { getToken } from "@/actions/auth";
+import Image from "next/image";
 
-export default function PaymentPage({ params }: { params: { id: string } }) {
+interface Listing {
+    id: string;
+    make: string;
+    model: string;
+    variant?: string;
+    year: number;
+    city: string;
+    asking_price: number;
+    photos: string[];
+}
+
+interface PaymentPageProps {
+    params: { id: string };
+}
+
+
+export default function PaymentPage({ params }: PaymentPageProps) {
     const { user, loading } = useAuth();
     const router = useRouter();
-    const [listing, setListing] = useState<any>(null);
+    const [listing, setListing] = useState<Listing | null>(null);
     const [loadingListing, setLoadingListing] = useState(true);
     const [processing, setProcessing] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -81,7 +98,7 @@ export default function PaymentPage({ params }: { params: { id: string } }) {
                 description: `Listing Fee for ${listing.make} ${listing.model}`,
                 image: "https://example.com/your_logo",
                 order_id: orderData.razorpay_order_id,
-                handler: async function (response: any) {
+                handler: async function (response: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) {
                     // 3. Verify Payment
                     const verifyRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000"}/api/v1/payments/verify`, {
                         method: "POST",
@@ -117,7 +134,7 @@ export default function PaymentPage({ params }: { params: { id: string } }) {
             };
 
             const rzp = new (window as any).Razorpay(options);
-            rzp.on('payment.failed', function (response: any){
+            rzp.on('payment.failed', function (response: { error: { description: string } }){
                 alert(response.error.description);
                 setProcessing(false);
             });
@@ -159,7 +176,7 @@ export default function PaymentPage({ params }: { params: { id: string } }) {
                     <div className="p-5 sm:p-8 flex flex-col sm:flex-row gap-5 sm:gap-6">
                         <div className="w-full sm:w-48 aspect-[4/3] bg-gray-100 rounded-xl overflow-hidden flex-shrink-0">
                             {listing.photos && listing.photos.length > 0 ? (
-                                <img src={listing.photos[0]} alt="Car" className="w-full h-full object-cover" />
+                                <Image src={listing.photos[0]} alt="Car" width={200} height={150} className="w-full h-full object-cover" unoptimized />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm font-semibold">No Image</div>
                             )}

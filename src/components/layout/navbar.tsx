@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
-import { Search, Heart, User, PlusCircle, LayoutGrid, ChevronDown, CheckCircle2, MessageCircle, Settings, LogOut } from "lucide-react";
+import { Search, Heart, User, PlusCircle, LayoutGrid, ChevronDown, CheckCircle2, LogOut } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
@@ -27,7 +27,7 @@ export default function Navbar() {
             <span className="font-black text-2xl tracking-tighter text-slate-900 leading-none">
               DriveMart
             </span>
-            <span className="text-[10px] uppercase font-bold text-gray-400 tracking-widest mt-0.5">India's Marketplace</span>
+            <span className="text-[10px] uppercase font-bold text-gray-400 tracking-widest mt-0.5">India&apos;s Marketplace</span>
           </div>
         </Link>
 

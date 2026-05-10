@@ -6,6 +6,23 @@ import { useAuth } from "@/context/AuthContext";
 import { Camera, ChevronRight, Loader2, X } from "lucide-react";
 import { getToken } from "@/actions/auth";
 
+interface FormData {
+    city: string;
+    make: string;
+    model: string;
+    variant: string;
+    year: string;
+    mileage_km: string;
+    fuel_type: string;
+    transmission: string;
+    asking_price: string;
+    phone: string;
+    title: string;
+    description: string;
+    photos: string[];
+}
+
+
 export default function SellPage() {
     const { user, loading } = useAuth();
     const router = useRouter();
@@ -14,7 +31,7 @@ export default function SellPage() {
     const [uploading, setUploading] = useState(false);
     
     // Form State
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         city: "Mumbai",
         make: "",
         model: "",
@@ -30,19 +47,21 @@ export default function SellPage() {
         photos: [] as string[]
     });
 
+
     useEffect(() => {
         if (!loading && !user) {
             router.push("/login?redirect=/sell");
         }
     }, [user, loading, router]);
 
-    const handleInputChange = (e: any) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleFileUpload = async (e: any) => {
-        const files = Array.from(e.target.files);
+
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = Array.from(e.target.files || []);
         if (!files.length) return;
         
         setUploading(true);

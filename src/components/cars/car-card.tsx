@@ -5,10 +5,24 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Calendar, Gauge, Heart, MapPin } from "lucide-react";
 
-export default function CarCard({ id, price, title, year, km, loc, image, dealer, premium = false, tag }: any) {
+interface CarCardProps {
+  id: string;
+  price: string;
+  title: string;
+  year: string;
+  km: string;
+  loc: string;
+  image: string;
+  dealer?: { id: string; dealership_name: string } | string;
+  premium?: boolean;
+  tag?: string;
+}
+
+export default function CarCard({ id, price, title, year, km, loc, image, dealer, premium = false, tag }: CarCardProps) {
+
   const router = useRouter();
 
-  const handleDealerClick = (e: any) => {
+  const handleDealerClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     if (dealer && dealer.id) {
