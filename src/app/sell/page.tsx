@@ -105,7 +105,8 @@ export default function SellPage() {
             });
             
             if (res.ok) {
-                router.push(`/dashboard`);
+                const responseData = await res.json();
+                router.push(`/pay/${responseData.id}`);
             } else {
                 console.error(await res.json());
             }
