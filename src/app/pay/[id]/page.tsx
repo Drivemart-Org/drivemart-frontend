@@ -23,7 +23,7 @@ export default function PaymentPage({ params }: { params: { id: string } }) {
     useEffect(() => {
         const fetchListing = async () => {
             try {
-                const res = await fetch(`http://localhost:8000/api/v1/listings/${params.id}`);
+                const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000"}/api/v1/listings/${params.id}`);
                 if (res.ok) {
                     const data = await res.json();
                     setListing(data);
@@ -57,7 +57,7 @@ export default function PaymentPage({ params }: { params: { id: string } }) {
         
         try {
             // 1. Create order on backend
-            const orderRes = await fetch("http://localhost:8000/api/v1/payments/create-order", {
+            const orderRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000"}/api/v1/payments/create-order`, {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",
@@ -83,7 +83,7 @@ export default function PaymentPage({ params }: { params: { id: string } }) {
                 order_id: orderData.razorpay_order_id,
                 handler: async function (response: any) {
                     // 3. Verify Payment
-                    const verifyRes = await fetch("http://localhost:8000/api/v1/payments/verify", {
+                    const verifyRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000"}/api/v1/payments/verify`, {
                         method: "POST",
                         headers: { 
                             "Content-Type": "application/json",
@@ -149,14 +149,14 @@ export default function PaymentPage({ params }: { params: { id: string } }) {
     }
 
     return (
-        <div className="max-w-[1000px] mx-auto px-4 py-8 sm:py-12 animate-in fade-in duration-500">
+        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12 animate-in fade-in duration-500">
             <h1 className="text-[26px] font-black text-slate-900 tracking-tight mb-8">Complete your Payment</h1>
             
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-start">
                 
                 {/* Left Column - Listing Summary */}
                 <div className="lg:col-span-2 bg-white rounded-2xl shadow-[0_4px_30px_rgb(0,0,0,0.03)] border border-gray-100 overflow-hidden">
-                    <div className="p-6 sm:p-8 flex flex-col sm:flex-row gap-6">
+                    <div className="p-5 sm:p-8 flex flex-col sm:flex-row gap-5 sm:gap-6">
                         <div className="w-full sm:w-48 aspect-[4/3] bg-gray-100 rounded-xl overflow-hidden flex-shrink-0">
                             {listing.photos && listing.photos.length > 0 ? (
                                 <img src={listing.photos[0]} alt="Car" className="w-full h-full object-cover" />
@@ -176,7 +176,7 @@ export default function PaymentPage({ params }: { params: { id: string } }) {
                 </div>
 
                 {/* Right Column - Payment Summary */}
-                <div className="bg-white rounded-2xl shadow-[0_4px_30px_rgb(0,0,0,0.03)] border border-gray-100 p-6 sm:p-8 sticky top-24">
+                <div className="bg-white rounded-2xl shadow-[0_4px_30px_rgb(0,0,0,0.03)] border border-gray-100 p-5 sm:p-8 sticky top-24">
                     <h3 className="text-lg font-black text-slate-900 mb-6">Order Summary</h3>
                     
                     <div className="space-y-4 mb-6">

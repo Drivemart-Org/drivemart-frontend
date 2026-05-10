@@ -8,7 +8,7 @@ import { storeToken } from "@/actions/auth";
 
 type AuthView = "options" | "email-login" | "email-register" | "email-otp";
 
-const API_BASE = "http://localhost:8000/api/v1/auth";
+const API_BASE = `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000"}/api/v1/auth`;
 
 export default function LoginForm() {
   const router = useRouter();

@@ -6,7 +6,7 @@ import Image from "next/image";
 import CarCard from "@/components/cars/car-card";
 import { CheckCircle2, MapPin, Search, Star, Phone } from "lucide-react";
 
-const API_URL = "http://localhost:8000/api/v1/dealers";
+const API_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000"}/api/v1/dealers`;
 
 export default function DealerProfilePage() {
   const { id } = useParams();

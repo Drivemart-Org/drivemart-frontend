@@ -5,7 +5,7 @@ import CarCard from "@/components/cars/car-card";
 import { Filter, Search, ChevronDown, Check } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-const API_URL = "http://localhost:8000/api/v1/listings/search";
+const API_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000"}/api/v1/listings/search`;
 
 export default function CarsPageWrapper() {
   return (

@@ -53,7 +53,7 @@ export default function SellPage() {
             formPayload.append("file", file as Blob);
             
             try {
-                const res = await fetch("http://localhost:8000/api/v1/upload/", {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000"}/api/v1/upload/`, {
                     method: "POST",
                     headers: { "Authorization": `Bearer ${token}` },
                     body: formPayload
@@ -82,7 +82,7 @@ export default function SellPage() {
         setSubmitting(true);
         const token = await getToken();
         try {
-            const res = await fetch("http://localhost:8000/api/v1/listings/", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000"}/api/v1/listings/`, {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",
@@ -119,7 +119,7 @@ export default function SellPage() {
     if (loading || !user) return <div className="p-20 flex justify-center"><Loader2 className="animate-spin text-rose-600" size={32} /></div>;
 
     return (
-        <div className="max-w-[760px] mx-auto px-4 py-8 sm:py-12 w-full animate-in fade-in duration-500">
+        <div className="max-w-[760px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12 w-full animate-in fade-in duration-500">
             {/* Header */}
             <div className="text-center mb-8">
                 <h1 className="text-[26px] font-black text-slate-900 tracking-tight mb-2">
@@ -143,7 +143,7 @@ export default function SellPage() {
             <div className="bg-white rounded-2xl shadow-[0_4px_30px_rgb(0,0,0,0.03)] border border-gray-100 overflow-hidden mb-8">
                 
                 {step === 1 ? (
-                    <div className="p-6 sm:p-10 space-y-6">
+                    <div className="p-5 sm:p-10 space-y-6">
                         
                         {/* Notice */}
                         <div className="bg-gray-50 p-4 rounded-xl border border-gray-100/50 flex flex-col justify-center items-center text-center shadow-inner">
@@ -235,12 +235,12 @@ export default function SellPage() {
 
                     </div>
                 ) : (
-                    <div className="p-6 sm:p-10 space-y-8">
+                    <div className="p-5 sm:p-10 space-y-8">
                         {/* Summary Block */}
                         <div className="bg-gray-50/50 p-6 sm:p-8 rounded-2xl border border-gray-100 relative shadow-inner">
                             <button onClick={() => setStep(1)} className="absolute top-6 right-6 text-sm font-black text-rose-600 hover:text-rose-700 transition tracking-wide hover:underline cursor-pointer">Edit</button>
                             <h3 className="text-[15px] font-black text-slate-900 mb-6 tracking-tight">Listing Summary</h3>
-                            <div className="grid grid-cols-[120px_1fr] md:grid-cols-[140px_1fr] gap-y-4 font-bold text-[13px]">
+                            <div className="grid grid-cols-1 sm:grid-cols-[120px_1fr] md:grid-cols-[140px_1fr] gap-y-2 sm:gap-y-4 font-bold text-[13px]">
                                 <span className="text-gray-500 font-semibold tracking-wide">Make & Model</span>
                                 <span className="text-slate-800">{formData.make} {formData.model}</span>
                                 <span className="text-gray-500 font-semibold tracking-wide">Trim</span>
@@ -268,7 +268,7 @@ export default function SellPage() {
                             </label>
 
                             {formData.photos.length > 0 && (
-                                <div className="grid grid-cols-4 sm:grid-cols-5 gap-3 mt-4 bg-white p-2 rounded-lg border border-gray-100">
+                                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 mt-4 bg-white p-2 rounded-lg border border-gray-100">
                                     {formData.photos.map((url, i) => (
                                         <div key={i} className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden border border-gray-200 group">
                                             <img src={url} alt="upload" className="w-full h-full object-cover" />

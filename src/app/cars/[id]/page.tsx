@@ -19,7 +19,7 @@ import {
   ChevronDown
 } from "lucide-react";
 
-const API_URL = "http://localhost:8000/api/v1/listings";
+const API_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000"}/api/v1/listings`;
 
 export default function CarDetailPage() {
   const { id } = useParams();

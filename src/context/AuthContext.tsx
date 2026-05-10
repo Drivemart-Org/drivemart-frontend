@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
     
     try {
-      const res = await fetch("http://localhost:8000/api/v1/auth/me", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000"}/api/v1/auth/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       

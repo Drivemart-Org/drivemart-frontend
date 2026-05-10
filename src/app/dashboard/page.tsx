@@ -85,7 +85,7 @@ export default function Dashboard() {
             const token = await getToken();
             if (!token) return;
             try {
-                const res = await fetch("http://localhost:8000/api/v1/listings/me", {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000"}/api/v1/listings/me`, {
                     headers: { "Authorization": `Bearer ${token}` }
                 });
                 if (res.ok) {
