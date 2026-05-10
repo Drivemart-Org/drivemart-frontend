@@ -8,8 +8,8 @@ import { AuthProvider } from "@/context/AuthContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "DriveMart | Premium Used Cars Marketplace",
-  description: "The best place to buy and sell premium used cars in India.",
+  title: "DriveMart | Used Cars Marketplace",
+  description: "The best place to buy and sell used cars in India.",
 };
 
 export default function RootLayout({
