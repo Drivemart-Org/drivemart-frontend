@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Calendar, Gauge, Heart, MapPin } from "lucide-react";
 
 interface CarCardProps {
-  id: string;
+  id?: string;
   price: string;
   title: string;
   year: string;
