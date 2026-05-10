@@ -95,7 +95,7 @@ export default function PaymentPage({ params }: PaymentPageProps) {
                 amount: orderData.amount,
                 currency: orderData.currency,
                 name: "DriveMart",
-                description: `Listing Fee for ${listing.make} ${listing.model}`,
+                description: `Listing Fee for ${listing?.make || ""} ${listing?.model || ""}`,
                 image: "https://example.com/your_logo",
                 order_id: orderData.razorpay_order_id,
                 handler: async function (response: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) {

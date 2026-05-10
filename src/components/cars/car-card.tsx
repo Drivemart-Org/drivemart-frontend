@@ -25,7 +25,7 @@ export default function CarCard({ id, price, title, year, km, loc, image, dealer
   const handleDealerClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (dealer && dealer.id) {
+    if (dealer && typeof dealer === 'object' && dealer.id) {
        router.push(`/dealers/${dealer.id}`);
     }
   };

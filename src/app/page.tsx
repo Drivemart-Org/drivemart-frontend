@@ -130,6 +130,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             <CarCard
+              id="hyundai-creta"
               price="₹ 14,50,000"
               title="Hyundai Creta SX Opt"
               year="2022" km="23k km" loc="Mumbai"
@@ -138,6 +139,7 @@ export default function Home() {
               tag="Great Value"
             />
             <CarCard
+              id="tata-harrier"
               price="₹ 22,90,000"
               title="Tata Harrier XZA Plus"
               year="2021" km="45k km" loc="Bangalore"
@@ -145,6 +147,7 @@ export default function Home() {
               dealer="Royal Motors"
             />
             <CarCard
+              id="mercedes-e-class"
               price="₹ 44,20,000"
               title="Mercedes-Benz E-Class"
               year="2023" km="12k km" loc="Delhi"
@@ -153,6 +156,7 @@ export default function Home() {
               premium
             />
             <CarCard
+              id="mahindra-xuv700"
               price="₹ 18,50,000"
               title="Mahindra XUV700 AX7"
               year="2022" km="32k km" loc="Pune"
