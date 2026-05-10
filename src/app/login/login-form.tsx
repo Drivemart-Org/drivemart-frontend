@@ -5,6 +5,8 @@ import { X, ArrowLeft, Mail, Navigation, Check, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useGoogleLogin } from "@react-oauth/google";
 import { storeToken } from "@/actions/auth";
+import { useAuth } from "@/context/AuthContext";
+
 
 type AuthView = "options" | "email-login" | "email-register" | "email-otp";
 
@@ -12,7 +14,9 @@ const API_BASE = `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:800
 
 export default function LoginForm() {
   const router = useRouter();
+  const { refreshAuth } = useAuth();
   const [view, setView] = useState<AuthView>("options");
+
   const [password, setPassword] = useState("");
 
   const pwdChecks = {
@@ -37,17 +41,18 @@ export default function LoginForm() {
         {view === "options" ? <X size={24} /> : <ArrowLeft size={24} />}
       </button>
 
-      {view === "options" && <OptionsView setView={setView} />}
-      {view === "email-login" && <LoginView setView={setView} />}
+      {view === "options" && <OptionsView setView={setView} refreshAuth={refreshAuth} />}
+      {view === "email-login" && <LoginView setView={setView} refreshAuth={refreshAuth} />}
       {view === "email-register" && (
-        <RegisterView password={password} setPassword={setPassword} pwdChecks={pwdChecks} setView={setView} />
+        <RegisterView password={password} setPassword={setPassword} pwdChecks={pwdChecks} setView={setView} refreshAuth={refreshAuth} />
       )}
       {view === "email-otp" && <OtpView setView={setView} />}
+
     </div>
   );
 }
 
-function OptionsView({ setView }: { setView: (v: AuthView) => void }) {
+function OptionsView({ setView, refreshAuth }: { setView: (v: AuthView) => void, refreshAuth: () => Promise<void> }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -64,6 +69,7 @@ function OptionsView({ setView }: { setView: (v: AuthView) => void }) {
         if (res.ok) {
           const data = await res.json();
           await storeToken(data.access_token);
+          await refreshAuth();
           router.push("/dashboard");
         } else {
           setError("Google login failed on backend.");
@@ -109,7 +115,7 @@ function OptionsView({ setView }: { setView: (v: AuthView) => void }) {
   );
 }
 
-function LoginView({ setView }: { setView: (v: AuthView) => void }) {
+function LoginView({ setView, refreshAuth }: { setView: (v: AuthView) => void, refreshAuth: () => Promise<void> }) {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -129,6 +135,7 @@ function LoginView({ setView }: { setView: (v: AuthView) => void }) {
       const data = await res.json();
       if (res.ok) {
         await storeToken(data.access_token);
+        await refreshAuth();
         router.push("/dashboard");
       } else {
         setError(data.detail || "Login failed");
@@ -161,7 +168,7 @@ function LoginView({ setView }: { setView: (v: AuthView) => void }) {
   );
 }
 
-function RegisterView({ password, setPassword, pwdChecks, setView }: any) {
+function RegisterView({ password, setPassword, pwdChecks, setView, refreshAuth }: any) {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -184,6 +191,7 @@ function RegisterView({ password, setPassword, pwdChecks, setView }: any) {
       const data = await res.json();
       if (res.ok) {
         await storeToken(data.access_token);
+        await refreshAuth();
         router.push("/dashboard");
       } else {
         setError(data.detail || "Registration failed");

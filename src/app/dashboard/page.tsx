@@ -9,60 +9,60 @@ import { getToken } from "@/actions/auth";
 import Image from "next/image";
 
 const DashboardAdCard = ({ ad }: any) => {
-   return (
-       <div className="flex bg-white rounded-[16px] border border-gray-200 overflow-hidden shadow-[0_2px_10px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition duration-300">
-           <div className="p-5 flex items-center justify-center border-r border-gray-50 bg-gray-50/30">
-               <input type="checkbox" className="w-5 h-5 rounded border-gray-300 text-rose-600 focus:ring-rose-500 cursor-pointer" />
-           </div>
-           <div className="w-56 h-[140px] relative bg-gray-100 shrink-0 border-r border-gray-100 p-2">
-               <div className="w-full h-full relative rounded-xl overflow-hidden shadow-inner bg-slate-200">
-                   {ad.photos && ad.photos.length > 0 ? (
-                       <Image src={ad.photos[0]} fill alt={`${ad.make} ${ad.model}`} className="object-cover" unoptimized/>
-                   ) : (
-                       <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 bg-gray-100 border border-dashed border-gray-300">
-                           <Image src="https://images.unsplash.com/photo-1550355291-bbee04a92027?q=80&w=200&auto=format&fit=crop" fill className="opacity-20 object-cover" alt="placeholder" unoptimized/>
-                           <span className="relative z-10 text-xs font-bold text-slate-500 bg-white/80 px-2 py-1 rounded shadow-sm backdrop-blur-sm">No Image</span>
-                       </div>
-                   )}
-               </div>
-           </div>
-           <div className="p-5 flex flex-col justify-between flex-grow">
-               <div>
-                   <div className="flex justify-between items-start">
-                       <div>
-                           <span className="inline-block px-2.5 py-1 text-[10px] font-black uppercase tracking-widest bg-gray-100 text-gray-600 rounded-md mb-2 shadow-sm border border-gray-200/50">
-                               {ad.status.replace("_", " ")}
-                           </span>
-                           <h3 className="text-xl font-black text-slate-900 tracking-tight leading-none mb-2">{ad.make} {ad.model} {ad.variant}</h3>
-                       </div>
-                       <button className="text-gray-400 hover:text-slate-800 p-1 bg-gray-50 rounded shadow-sm border border-gray-100 transition hover:bg-gray-100">
-                           <MoreVertical size={16} />
-                       </button>
-                   </div>
-                   
-                   <div className="text-sm font-semibold text-gray-500 flex items-center gap-2 mt-1">
-                       <span className="text-slate-900 font-bold">₹ {ad.asking_price.toLocaleString()}</span>
-                       <span>•</span>
-                       <span>Last Updated: {new Date(ad.created_at).toLocaleDateString()}</span>
-                   </div>
-               </div>
-               <div className="flex items-center justify-between mt-4">
-                   <span className="text-[12px] text-gray-400 font-bold flex items-center gap-1.5 uppercase tracking-wider">
-                       <Calendar size={14}/> Ad expires in 30 days
-                   </span>
-                   {ad.status === "draft" || ad.status === "under_review" ? (
-                       <Link href={`/sell?id=${ad.id}`} className="text-sm font-bold text-rose-600 hover:bg-rose-50 px-4 py-2 rounded-xl border border-rose-200 shadow-sm transition">
-                           {ad.status === "draft" ? "Continue Posting Ad" : "Preview Application"}
-                       </Link>
-                   ) : (
-                       <Link href={`/cars/${ad.id}`} className="text-sm font-bold text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-xl border border-blue-200 shadow-sm transition">
-                           View Live Ad
-                       </Link>
-                   )}
-               </div>
-           </div>
-       </div>
-   )
+    return (
+        <div className="flex flex-col sm:flex-row bg-white rounded-[16px] border border-gray-200 overflow-hidden shadow-[0_2px_10px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition duration-300">
+            <div className="hidden sm:flex p-5 items-center justify-center border-r border-gray-50 bg-gray-50/30">
+                <input type="checkbox" className="w-5 h-5 rounded border-gray-300 text-rose-600 focus:ring-rose-500 cursor-pointer" />
+            </div>
+            <div className="w-full sm:w-56 h-[180px] sm:h-[140px] relative bg-gray-100 shrink-0 sm:border-r border-gray-100 p-2">
+                <div className="w-full h-full relative rounded-xl overflow-hidden shadow-inner bg-slate-200">
+                    {ad.photos && ad.photos.length > 0 ? (
+                        <Image src={ad.photos[0]} fill alt={`${ad.make} ${ad.model}`} className="object-cover" unoptimized/>
+                    ) : (
+                        <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 bg-gray-100 border border-dashed border-gray-300">
+                            <Image src="https://images.unsplash.com/photo-1550355291-bbee04a92027?q=80&w=200&auto=format&fit=crop" fill className="opacity-20 object-cover" alt="placeholder" unoptimized/>
+                            <span className="relative z-10 text-xs font-bold text-slate-500 bg-white/80 px-2 py-1 rounded shadow-sm backdrop-blur-sm">No Image</span>
+                        </div>
+                    )}
+                </div>
+            </div>
+            <div className="p-5 flex flex-col justify-between flex-grow">
+                <div>
+                    <div className="flex justify-between items-start">
+                        <div>
+                            <span className="inline-block px-2.5 py-1 text-[10px] font-black uppercase tracking-widest bg-gray-100 text-gray-600 rounded-md mb-2 shadow-sm border border-gray-200/50">
+                                {ad.status.replace("_", " ")}
+                            </span>
+                            <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight leading-none mb-2">{ad.make} {ad.model} {ad.variant}</h3>
+                        </div>
+                        <button className="text-gray-400 hover:text-slate-800 p-1 bg-gray-50 rounded shadow-sm border border-gray-100 transition hover:bg-gray-100">
+                            <MoreVertical size={16} />
+                        </button>
+                    </div>
+                    
+                    <div className="text-sm font-semibold text-gray-500 flex flex-wrap items-center gap-2 mt-1">
+                        <span className="text-slate-900 font-bold">₹ {ad.asking_price.toLocaleString()}</span>
+                        <span className="hidden sm:inline">•</span>
+                        <span>Last Updated: {new Date(ad.created_at).toLocaleDateString()}</span>
+                    </div>
+                </div>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-4 gap-4">
+                    <span className="text-[12px] text-gray-400 font-bold flex items-center gap-1.5 uppercase tracking-wider">
+                        <Calendar size={14}/> Ad expires in 30 days
+                    </span>
+                    {ad.status === "draft" || ad.status === "under_review" ? (
+                        <Link href={`/sell?id=${ad.id}`} className="w-full sm:w-auto text-center text-sm font-bold text-rose-600 hover:bg-rose-50 px-4 py-2 rounded-xl border border-rose-200 shadow-sm transition">
+                            {ad.status === "draft" ? "Continue Posting Ad" : "Preview Application"}
+                        </Link>
+                    ) : (
+                        <Link href={`/cars/${ad.id}`} className="w-full sm:w-auto text-center text-sm font-bold text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-xl border border-blue-200 shadow-sm transition">
+                            View Live Ad
+                        </Link>
+                    )}
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default function Dashboard() {
